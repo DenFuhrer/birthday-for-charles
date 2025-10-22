@@ -1,0 +1,162 @@
+:root{
+  --blue:#5dd0ff;
+  --pink:#ff8fc4;
+  --bg-a: #c2f3ff;
+  --bg-b: #ffd8ee;
+  --cake-1: #fff8f0;
+  --cake-2: #ffeef8;
+  --cake-3: #ffd9e8;
+  --icing: #fffbf6;
+  --text: #07203a;
+}
+
+* {box-sizing: border-box; margin:0; padding:0}
+html,body {height:100%}
+body{
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, var(--blue) 0%, transparent 30%),
+              radial-gradient(900px 500px at 90% 90%, var(--pink) 0%, transparent 30%),
+              linear-gradient(120deg, var(--bg-a), var(--bg-b));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text);
+  overflow:hidden;
+  padding:30px;
+}
+
+/* Stage */
+.stage { max-width:920px; width:100%; text-align:center; position:relative; z-index:1; }
+
+/* Title */
+.title {
+  font-size: clamp(20px,4vw,36px);
+  margin-bottom:18px;
+  letter-spacing:1px;
+  color: #042033;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+/* Cake area */
+#cake-area { display:flex; flex-direction:column; align-items:center; gap:16px; }
+
+/* Cake container */
+#cake {
+  position:relative;
+  width: min(480px, 85vw);
+  height: 320px;
+  pointer-events:none;
+}
+
+/* Layers (stacked visually bottom to top, but we place them and animate drop) */
+.layer {
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  width:80%;
+  opacity:0;
+}
+
+/* sizes */
+.layer-1 { bottom:0; height:120px; background: linear-gradient(180deg,var(--cake-1),var(--icing)); }
+.layer-2 { bottom:80px; height:90px; width:70%; background: linear-gradient(180deg,var(--cake-2),var(--icing)); }
+.layer-3 { bottom:150px; height:70px; width:60%; background: linear-gradient(180deg,var(--cake-3),var(--icing)); }
+
+/* drop animation */
+.drop {
+  animation: dropIn 900ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes dropIn {
+  0% { transform: translate(-50%,-60px) scaleY(.98); opacity:0; }
+  80% { transform: translate(-50%,8px) scaleY(1.01); opacity:1; }
+  100% { transform: translate(-50%,0) scaleY(1); opacity:1; }
+}
+
+/* candles */
+#candles {
+  position:absolute;
+  top:110px;
+  left:50%;
+  transform:translateX(-50%);
+  width:60%;
+  display:flex;
+  justify-content:space-between;
+  gap:6px;
+  pointer-events:none;
+}
+.candle {
+  width:6px;
+  height:28px;
+  background: linear-gradient(180deg,#fff 0%, #ffd6ea 100%);
+  border-radius:3px;
+  position:relative;
+  transform-origin:center bottom;
+  animation: flicker 2s infinite;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+.candle::after{
+  content:'';
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:6px;
+  height:8px;
+  background: radial-gradient(circle at 50% 30%, #fff7c6, #ffc658 60%, transparent 70%);
+  border-radius:50% 50% 40% 40%;
+  filter: blur(0.6px);
+  opacity:0.95;
+}
+
+/* tiny flame glow - for fx we will use canvas but keep simple */
+.flicker-anim { animation: candleGlow 1200ms infinite; }
+@keyframes flicker { 0%{transform:scaleY(1)} 50%{transform:scaleY(1.06)} 100%{transform:scaleY(1)} }
+@keyframes candleGlow { from{opacity:.9} to{opacity:.8} }
+
+/* prompt */
+#prompt {
+  font-size:18px;
+  color:#052a3a;
+  margin-top:6px;
+  font-weight:600;
+  opacity:0;
+  transform:translateY(6px);
+  transition: all 600ms ease;
+}
+#prompt.show { opacity:1; transform:translateY(0); }
+
+/* fallback button */
+#fallback { margin-top:6px; }
+#blow-btn {
+  background: linear-gradient(90deg, rgba(93,208,255,0.95), rgba(255,143,196,0.95));
+  border:none; padding:10px 18px; border-radius:999px;
+  color:white; font-weight:700; cursor:pointer; box-shadow: 0 10px 30px rgba(24,38,64,0.12);
+}
+
+/* message */
+#message {
+  margin-top:18px;
+  font-size: clamp(16px, 3vw, 28px);
+  font-weight:800;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:12px;
+  background: linear-gradient(90deg, rgba(5,32,58,0.9), rgba(3,96,145,0.9));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  opacity:0; transform:translateY(8px) scale(.99);
+  transition: all 600ms cubic-bezier(.2,.9,.2,1);
+}
+#message.show { opacity:1; transform:translateY(0) scale(1); }
+
+/* canvas style */
+#fx-canvas {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* helpers */
+.hidden { display:none !important; }
