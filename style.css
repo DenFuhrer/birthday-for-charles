@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(circle at top, #ffe6e6, #ff99cc);
+  background: linear-gradient(135deg, #a8e6ff, #ffc1f3);
   height: 100vh;
   margin: 0;
   display: flex;
@@ -43,7 +43,8 @@ body {
   to { opacity: 1; }
 }
 
-#fireworks {
+#fireworks,
+#confetti {
   position: fixed;
   top: 0;
   left: 0;
