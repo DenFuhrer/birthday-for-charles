@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday, Charles! 🎂</title>
+  <title>Happy Birthday, Charles 🎂</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>🎉 Happy Birthday, Charles! 🎉</h1>
-    <p>Click the heart below — there’s a surprise waiting for you 💝</p>
-    <div class="heart" onclick="startCelebration()">💖</div>
-    <canvas id="fireworks"></canvas>
-    <p id="message" class="hidden">Wishing you all the love, joy, and laughter you deserve! 💫<br><strong>Happy Birthday, my baby Charles! 🎂💞</strong></p>
-    <audio id="birthdaySong" src="https://cdn.pixabay.com/download/audio/2021/10/13/audio_3a6e13d5b3.mp3?filename=happy-birthday-122320.mp3"></audio>
+    <h1>Hey Charles 🎉</h1>
+    <p>Click the heart below — I have something special for you 💖</p>
+    <div class="heart" onclick="startCelebration()">❤️</div>
+
+    <div id="message" class="hidden">
+      <h2>Happy Birthday, Charles! 🥳</h2>
+      <p>You’re an amazing person who deserves all the love and joy in the world! 💫</p>
+      <p>May your day be filled with laughter, sweetness, and everything you wish for. 🎂🎁</p>
+    </div>
+
+    <!-- Local Happy Birthday song -->
+    <audio id="birthdaySong" src="hbd.mp3"></audio>
   </div>
-  <audio id="birthdaySong" src="hbd.mp3"></audio>
+
+  <canvas id="fireworks"></canvas>
+
   <script src="script.js"></script>
 </body>
 </html>
-
-
