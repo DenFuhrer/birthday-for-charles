@@ -1,33 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Birthday Charles 🎂</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Charles! 🎂</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="stage">
-    <h1 class="title">Happy Birthday, Charles 🎉</h1>
-
-    <div id="cake-area">
-      <div id="cake">
-        <div class="layer layer-3"></div>
-        <div class="layer layer-2"></div>
-        <div class="layer layer-1"></div>
-        <div id="candles"></div>
-      </div>
-      <p id="prompt" class="hidden">You need to blow the cake</p>
-
-      <div id="fallback" class="hidden">
-        <button id="blow-btn">Blow / Tap to Celebrate</button>
-      </div>
-    </div>
-
-    <div id="message" class="hidden">Happy Birthday, baby! 🥳💖</div>
-    <canvas id="fx-canvas"></canvas>
+  <div class="container">
+    <h1>🎉 Happy Birthday, Charles! 🎉</h1>
+    <p>Click the heart below — there’s a surprise waiting for you 💝</p>
+    <div class="heart" onclick="startCelebration()">💖</div>
+    <canvas id="fireworks"></canvas>
+    <p id="message" class="hidden">Wishing you all the love, joy, and laughter you deserve! 💫<br><strong>Happy Birthday, my dear Charles! 🎂💞</strong></p>
+    <audio id="birthdaySong" src="https://cdn.pixabay.com/download/audio/2021/10/13/audio_3a6e13d5b3.mp3?filename=happy-birthday-122320.mp3"></audio>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
