@@ -1,74 +1,79 @@
 function startCelebration() {
-  const msg = document.getElementById('message');
-  const song = document.getElementById('birthdaySong');
-  msg.classList.remove('hidden');
+  const heart = document.querySelector(".heart");
+  const message = document.getElementById("message");
+  const song = document.getElementById("birthdaySong");
+
+  heart.style.display = "none";
+  message.classList.remove("hidden");
+
+  // Play song
   song.play();
-  launchFireworks();
-  startConfetti();
+
+  // Start fireworks & confetti
+  startFireworks();
+
+  // ⏰ Reset after 5 minutes
+  setTimeout(() => {
+    song.pause();
+    song.currentTime = 0;
+    location.reload();
+  }, 300000); // 5 minutes
 }
 
-// ===== Fireworks =====
-function launchFireworks() {
-  const canvas = document.getElementById('fireworks');
-  const ctx = canvas.getContext('2d');
+// Simple fireworks animation
+function startFireworks() {
+  const canvas = document.getElementById("fireworks");
+  const ctx = canvas.getContext("2d");
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  let particles = [];
-  const colors = ['#ff69b4', '#00ffff', '#ffb6c1', '#ffd700', '#87cefa'];
+  const fireworks = [];
+
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
   function createFirework() {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height / 2;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x, y,
-        dx: (Math.random() - 0.5) * 6,
-        dy: (Math.random() - 0.5) * 6,
-        life: 100,
-        color
+    const x = random(0, canvas.width);
+    const y = random(0, canvas.height / 2);
+    const colors = ["#ff007f", "#ffcc00", "#00ccff", "#ff6600", "#33ff99"];
+    for (let i = 0; i < 30; i++) {
+      fireworks.push({
+        x,
+        y,
+        radius: random(2, 4),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedX: random(-3, 3),
+        speedY: random(-3, 3),
+        alpha: 1
       });
     }
   }
 
-  function animate() {
+  function drawFireworks() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p, i) => {
-      p.x += p.dx;
-      p.y += p.dy;
-      p.life--;
-      ctx.fillStyle = p.color;
+    fireworks.forEach((f, i) => {
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${hexToRgb(f.color)},${f.alpha})`;
       ctx.fill();
-      if (p.life <= 0) particles.splice(i, 1);
+      f.x += f.speedX;
+      f.y += f.speedY;
+      f.alpha -= 0.02;
+      if (f.alpha <= 0) fireworks.splice(i, 1);
     });
     if (Math.random() < 0.05) createFirework();
-    requestAnimationFrame(animate);
-  }
-  animate();
-}
-
-// ===== Confetti =====
-function startConfetti() {
-  const duration = 8000;
-  const animationEnd = Date.now() + duration;
-  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2 };
-
-  function randomInRange(min, max) {
-    return Math.random() * (max - min) + min;
+    requestAnimationFrame(drawFireworks);
   }
 
-  const interval = setInterval(function() {
-    const timeLeft = animationEnd - Date.now();
-    if (timeLeft <= 0) return clearInterval(interval);
-    const particleCount = 50 * (timeLeft / duration);
-    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 } }));
-  }, 250);
+  drawFireworks();
 }
 
-// ===== Load Confetti Library =====
-const script = document.createElement('script');
-script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-document.head.appendChild(script);
+function hexToRgb(hex) {
+  const bigint = parseInt(hex.replace("#", ""), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `${r},${g},${b}`;
+}
