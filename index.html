@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday, Charles 🎂</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Hey Charles 🎉</h1>
+    <h1>Hello Charles 🌤</h1>
     <p>Click the heart below — I have something special for you 💖</p>
-    <div class="heart" onclick="startCelebration()">❤️</div>
+    <div class="heart" onclick="toggleCelebration()">❤️</div>
 
     <div id="message" class="hidden">
       <h2>Happy Birthday, Charles! 🥳</h2>
-      <p>You’re an amazing person who deserves all the love and joy in the world! 💫</p>
-      <p>May your day be filled with laughter, sweetness, and everything you wish for. 🎂🎁</p>
+      <p>You make the world brighter just by being you. 💫<br>
+      Wishing you laughter, love, and endless smiles today! 🎁</p>
     </div>
 
     <!-- Local Happy Birthday song -->
@@ -23,6 +23,7 @@
   </div>
 
   <canvas id="fireworks"></canvas>
+  <canvas id="confetti"></canvas>
 
   <script src="script.js"></script>
 </body>
