@@ -4,15 +4,18 @@ let audio = new Audio('hbd.mp3');
 function revealMessage() {
   const msg = document.getElementById('message');
   const confettiContainer = document.getElementById('confetti-container');
+  const instruction = document.querySelector('.container p'); // instruction text
 
   if (!isMessageShown) {
+    // Hide instruction and show message
+    instruction.style.display = 'none';
     msg.classList.remove('hidden');
+
+    // Play song and celebration effects
     playConfettiSequence();
     audio.play();
-    isMessageShown = true;
 
-    // Auto reset after 5 minutes
-    setTimeout(resetMessage, 5 * 60 * 1000);
+    isMessageShown = true;
   } else {
     resetMessage();
   }
@@ -20,11 +23,18 @@ function revealMessage() {
 
 function resetMessage() {
   const msg = document.getElementById('message');
-  msg.classList.add('hidden');
   const confettiContainer = document.getElementById('confetti-container');
+  const instruction = document.querySelector('.container p');
+
+  // Reset view
+  msg.classList.add('hidden');
+  instruction.style.display = 'block';
+
+  // Stop music and clear effects
   confettiContainer.innerHTML = '';
   audio.pause();
   audio.currentTime = 0;
+
   isMessageShown = false;
 }
 
@@ -43,7 +53,7 @@ function playConfettiSequence() {
     setTimeout(() => confetti.remove(), 6000);
   }
 
-  // After confetti finishes falling → fireworks and new confetti burst
+  // After confetti finishes falling → fireworks + new confetti burst
   setTimeout(() => {
     playFireworks();
     playConfettiBurst();
